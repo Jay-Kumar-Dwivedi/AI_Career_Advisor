@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Career Recommendation — AI Career Advisor</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+      background: #f0f4ff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+      padding: 2.5rem 2rem;
+      width: 100%;
+      max-width: 540px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #e8f0fe;
+      color: #3b5bdb;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      border-radius: 20px;
+      padding: 4px 12px;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    .greeting {
+      font-size: 1.05rem;
+      color: #57606a;
+      margin-bottom: 0.3rem;
+    }
+
+    .career-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #3b5bdb;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    /* ── Confidence Score ── */
+    .confidence-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 1.6rem;
+    }
+
+    .confidence-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #57606a;
+      white-space: nowrap;
+    }
+
+    .bar-track {
+      flex: 1;
+      background: #e5e7eb;
+      border-radius: 20px;
+      height: 10px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 20px;
+      background: linear-gradient(90deg, #3b5bdb, #5c7cfa);
+      width: {{ confidence }}%;
+      transition: width 0.8s ease;
+    }
+
+    .confidence-pct {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #3b5bdb;
+      white-space: nowrap;
+    }
+
+    /* ── Meta tags (experience / education) ── */
+    .meta-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 1.4rem;
+    }
+
+    .meta-pill {
+      background: #f0f4ff;
+      color: #3b5bdb;
+      font-size: 0.78rem;
+      font-weight: 600;
+      border-radius: 20px;
+      padding: 4px 12px;
+      border: 1px solid #c5d3f8;
+    }
+
+    /* ── Section blocks ── */
+    .section {
+      background: #f7f8fa;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 1.2rem 1.4rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #57606a;
+      margin-bottom: 0.7rem;
+    }
+
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .skill-pill {
+      background: #e8f0fe;
+      color: #1a3a8f;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: 20px;
+      padding: 5px 14px;
+    }
+
+    /* ── Project box ── */
+    .project-box {
+      background: #fffbe6;
+      border: 1px solid #ffe066;
+      border-radius: 10px;
+      padding: 1.2rem 1.4rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .project-box .section-label { color: #856404; }
+
+    .project-text {
+      font-size: 0.95rem;
+      color: #1f2328;
+      line-height: 1.6;
+    }
+
+    /* ── Buttons ── */
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 0;
+    }
+
+    .back-btn {
+      flex: 1;
+      padding: 0.75rem;
+      background: #3b5bdb;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .back-btn:hover { background: #2f4ac4; }
+
+    .pdf-btn {
+      flex: 1;
+      padding: 0.75rem;
+      background: #fff;
+      color: #3b5bdb;
+      border: 2px solid #3b5bdb;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .pdf-btn:hover {
+      background: #3b5bdb;
+      color: #fff;
+    }
+
+    .sdg-tag {
+      text-align: center;
+      margin-top: 1.4rem;
+      font-size: 0.78rem;
+      color: #57606a;
+    }
+
+    .sdg-tag span {
+      background: #fff3cd;
+      color: #856404;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+
+    /* ── Print / PDF styles ── */
+    @media print {
+      body { background: #fff; padding: 0; }
+      .card { box-shadow: none; }
+      .btn-row { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card" id="result-card">
+    <div class="badge">SDG 8 — Decent Work &amp; Economic Growth</div>
+
+    <p class="greeting">Hello, {{ name }} 👋 Here is your AI recommendation:</p>
+    <div class="career-title">{{ career }}</div>
+
+    <!-- Confidence Score -->
+    <div class="confidence-row">
+      <span class="confidence-label">AI Match Score</span>
+      <div class="bar-track">
+        <div class="bar-fill" style="width: {{ confidence }}%;"></div>
+      </div>
+      <span class="confidence-pct">{{ confidence }}%</span>
+    </div>
+
+    <!-- Meta info -->
+    <div class="meta-row">
+      {% if experience %}
+        <span class="meta-pill">🎓 Experience: {{ experience }}</span>
+      {% endif %}
+      {% if education %}
+        <span class="meta-pill">📚 Education: {{ education }}</span>
+      {% endif %}
+    </div>
+
+    <!-- Learning Roadmap -->
+    <div class="section">
+      <div class="section-label">📚 Learning Roadmap</div>
+      <div class="skills-list">
+        {% for skill in roadmap %}
+          <span class="skill-pill">{{ loop.index }}. {{ skill }}</span>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Hands-on Project -->
+    <div class="project-box">
+      <div class="section-label">🛠️ Hands-on Project to Build</div>
+      <p class="project-text">{{ project }}</p>
+    </div>
+
+    <!-- Buttons -->
+    <div class="btn-row">
+      <a href="/" class="back-btn">← New Assessment</a>
+      <button class="pdf-btn" onclick="window.print()">⬇ Download PDF</button>
+    </div>
+
+    <p class="sdg-tag">Powered by <span>Agentic AI</span> · Skill-job mismatch solver</p>
+  </div>
+</body>
+</html>

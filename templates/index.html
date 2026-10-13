@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Career Advisor</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+      background: #f0f4ff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+      padding: 2.5rem 2rem;
+      width: 100%;
+      max-width: 480px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #e8f0fe;
+      color: #3b5bdb;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      border-radius: 20px;
+      padding: 4px 12px;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      color: #1a1a2e;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+
+    .subtitle {
+      color: #57606a;
+      font-size: 0.9rem;
+      margin-bottom: 1.8rem;
+      line-height: 1.5;
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #1f2328;
+      margin-bottom: 0.35rem;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 0.65rem 0.9rem;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: #1f2328;
+      background: #fafafa;
+      transition: border-color 0.2s;
+      outline: none;
+      resize: vertical;
+      appearance: none;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: #3b5bdb;
+      background: #fff;
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .hint {
+      font-size: 0.78rem;
+      color: #57606a;
+      margin-top: 0.3rem;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      padding: 0.8rem;
+      background: #3b5bdb;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 0.5rem;
+    }
+
+    button[type="submit"]:hover {
+      background: #2f4ac4;
+    }
+
+    .sdg-tag {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.78rem;
+      color: #57606a;
+    }
+
+    .sdg-tag span {
+      background: #fff3cd;
+      color: #856404;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="badge">SDG 8 — Decent Work &amp; Economic Growth</div>
+    <h1>AI Career Advisor</h1>
+    <p class="subtitle">
+      Tell us about your skills and interests — our AI will recommend a career path,
+      learning roadmap, and a hands-on project to build.
+    </p>
+
+    <form method="POST" action="/">
+      <div class="form-group">
+        <label for="name">Your Name</label>
+        <input type="text" id="name" name="name" placeholder="e.g. Amit Tiwari" required />
+      </div>
+
+      <div class="form-group">
+        <label for="skills">Current Skills</label>
+        <textarea id="skills" name="skills" rows="2"
+          placeholder="e.g. Python, Excel, SQL, HTML" required></textarea>
+        <p class="hint">List the tools, languages, or technologies you already know.</p>
+      </div>
+
+      <div class="form-group">
+        <label for="interest">Career Interest</label>
+        <textarea id="interest" name="interest" rows="2"
+          placeholder="e.g. data analysis, web development, AI/ML, cybersecurity, DevOps" required></textarea>
+        <p class="hint">What field or type of work interests you most?</p>
+      </div>
+
+      <div class="form-group">
+        <label for="experience">Experience Level</label>
+        <select id="experience" name="experience">
+          <option value="beginner">Beginner (0–1 years)</option>
+          <option value="intermediate">Intermediate (1–3 years)</option>
+          <option value="experienced">Experienced (3+ years)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="education">Education / Background <span style="font-weight:400;color:#57606a;">(optional)</span></label>
+        <input type="text" id="education" name="education" placeholder="e.g. B.Tech CSE, 12th Science, BCA" />
+      </div>
+
+      <button type="submit">Get My Career Recommendation →</button>
+    </form>
+
+    <p class="sdg-tag">Powered by <span>Agentic AI</span> · Skill-job mismatch solver</p>
+  </div>
+</body>
+</html>
