@@ -14,6 +14,9 @@ An agentic AI web app that recommends a career path, learning roadmap, and hands
 ## Tech Stack
 - Python, Flask, SQLite, HTML/CSS
 
+## 🌐 Live Demo
+👉 https://ai-career-advisor-p0hi.onrender.com
+
 ## Run Locally
 ```bash
 pip install -r requirements.txt
