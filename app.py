@@ -1,11 +1,14 @@
 
+import os
 from flask import Flask, render_template, request
 import sqlite3
 
 app = Flask(__name__)
 
+DB_PATH = os.path.join("/tmp", "career.db") if os.environ.get("RENDER") else "career.db"
+
 def create_database():
-    conn = sqlite3.connect("career.db")
+    conn = sqlite3.connect(DB_PATH)
     conn.execute("""
         CREATE TABLE IF NOT EXISTS assessments (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -130,7 +133,7 @@ def home():
             skills, interest
         )
 
-        conn = sqlite3.connect("career.db")
+        conn = sqlite3.connect(DB_PATH)
         conn.execute(
             """INSERT INTO assessments
             (name, skills, interest, career)
