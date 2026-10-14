@@ -5,7 +5,9 @@ import sqlite3
 
 app = Flask(__name__)
 
-DB_PATH = os.path.join("/tmp", "career.db") if os.environ.get("RENDER") else "career.db"
+DB_PATH = os.path.join("/tmp", "career.db") if (os.environ.get("RENDER") or os.environ.get("VERCEL")) else "career.db"
+
+create_database_done = False
 
 def create_database():
     conn = sqlite3.connect(DB_PATH)
@@ -116,6 +118,14 @@ def recommend_career(skills, interest):
     ))
 
     return best, roadmap, project, confidence
+
+# Ensure DB exists on first request (needed for Vercel serverless)
+@app.before_request
+def ensure_db():
+    global create_database_done
+    if not create_database_done:
+        create_database()
+        create_database_done = True
 
 @app.route("/", methods=["GET", "POST"])
 def home():
